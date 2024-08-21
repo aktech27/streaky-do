@@ -1,11 +1,21 @@
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import { ThemeProvider } from '@mui/material/styles';
+import customTheme from './utils/theme';
 
 const App = () => {
+
   return (
-    <Container>
-      <Typography variant="h1" textAlign={'center'}>Hello, World!</Typography>
-    </Container>
+    <ThemeProvider theme={customTheme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<SignIn />} />
+          <Route path='/sign-in' element={<SignIn />} />
+          <Route path='/sign-up' element={<SignUp />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 };
 
