@@ -4,12 +4,27 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import supabase from '../../utils/supabase';
 
-const SignUpForm = () => {
+const SignUpForm = ({ setLoading }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
     console.log(e.target.name.value, e.target.email.value, e.target.password.value);
+    setLoading(true);
+    const { data, error } = await supabase.auth.signUp({
+      email: e.target.email.value,
+      password: e.target.password.value,
+    });
+    setLoading(false);
+    if (error) {
+      console.error(error);
+    }
+    if (data) {
+      console.log(data);
+    }
   };
+
   return (
     <Grid item xs={12} sm={8} md={6}>
       <Box
