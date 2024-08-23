@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import supabase from '../../utils/supabase';
 
-const SignInForm = ({ setLoading }) => {
+const SignInForm = ({ setLoading, setToast }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -18,10 +18,9 @@ const SignInForm = ({ setLoading }) => {
     });
     setLoading(false);
     if (error) {
-      console.error(error);
-    }
-    if (data) {
-      console.log(data);
+      setToast({ state: true, message: error.message, severity: 'error' });
+    } else if (data) {
+      setToast({ state: true, message: 'Login Successful', severity: 'success' });
     }
   };
 
