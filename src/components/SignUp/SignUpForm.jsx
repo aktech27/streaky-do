@@ -5,8 +5,11 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import supabase from '../../utils/supabase';
+import { useContext } from 'react';
+import { AuthContext } from '../../context';
 
-const SignUpForm = ({ setLoading }) => {
+const SignUpForm = ({ setLoading, setToast }) => {
+  const { dispatch } = useContext(AuthContext);
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -18,10 +21,11 @@ const SignUpForm = ({ setLoading }) => {
     });
     setLoading(false);
     if (error) {
-      console.error(error);
-    }
-    if (data) {
+      setToast({ state: true, message: error.message, severity: 'error' });
+    } else if (data) {
       console.log(data);
+      dispatch({ type: 'LOGIN', payload: data.user });
+      setToast({ state: true, message: 'Registration Successful', severity: 'success' });
     }
   };
 
